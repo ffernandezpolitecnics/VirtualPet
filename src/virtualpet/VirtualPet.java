@@ -71,19 +71,8 @@ public class VirtualPet {
                 default:
                     System.out.println("Error option !!!!");
             }
+            showState(energy, fatigue, sleep, hygiene, weight);
         } while (option != 0);
-        
-
-        
-
-
-
-
-
-       
-
-        0.- The last option shows the actual state of each attribute just before exiting the application.
-
     }
 
     public static int initialValue() {
@@ -110,11 +99,11 @@ public class VirtualPet {
     }
    
     public static void showState(int energy, int fatigue, int sleep, int hygiene, int weight) {
-        System.out.print("Sleep: " + sleep);
-        System.out.print("Fatigue: " + fatigue);
-        System.out.print("Energy: " + energy);
-        System.out.print("Hygiene: " + hygiene);
-        System.out.print("Weight: " + weight);
+        System.out.println("Sleep: " + sleep);
+        System.out.println("Fatigue: " + fatigue);
+        System.out.println("Energy: " + energy);
+        System.out.println("Hygiene: " + hygiene);
+        System.out.println("Weight: " + weight);
    
     }
      
