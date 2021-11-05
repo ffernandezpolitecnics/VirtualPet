@@ -110,21 +110,22 @@ public class VirtualPet {
         Scanner sc = new Scanner(System.in);
         char option;
 
-        spaces(10);
+        spaces(15);
         System.out.println("VirtualPET");
-        spaces(10);
+        spaces(15);
         System.out.println("----------");
-        spaces(10);
+        spaces(15);
         System.out.println("1.- Sleep");
-        spaces(10);
+        spaces(15);
         System.out.println("2.- Play");
-        spaces(10);
+        spaces(15);
         System.out.println("3.- Eat");
-        spaces(10);
+        spaces(15);
         System.out.println("4.- Shower");
-        spaces(10);
+        spaces(15);
         System.out.println("0.- Exit application");
-        spaces(10);
+        System.out.println();
+        spaces(20);
         System.out.print("Option: ");
         option = sc.next().charAt(0);
 
