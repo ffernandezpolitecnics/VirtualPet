@@ -4,8 +4,11 @@
  */
 package virtualpet;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -22,10 +25,11 @@ public class VirtualPet {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
 
-        int energy, fatigue, sleep, hygiene, weight, option;
+        int energy, fatigue, sleep, hygiene, weight;
+        char option;
 
         energy = initialValue();
         fatigue = initialValue();
@@ -33,11 +37,14 @@ public class VirtualPet {
         hygiene = initialValue();
         weight = initialValue();
 
-        do {                
+        do {    
+            limpiarAnt();
+            showState(energy, fatigue, sleep, hygiene, weight);
             option = menu();
        
             switch (option) {
                 case '0':
+                    System.out.println();
                     showState(energy, fatigue, sleep, hygiene, weight);
                     break;
                 case '1':
@@ -71,8 +78,10 @@ public class VirtualPet {
                 default:
                     System.out.println("Error option !!!!");
             }
-            showState(energy, fatigue, sleep, hygiene, weight);
-        } while (option != 0);
+        } while (option != '0' && !isDead(energy, fatigue, sleep, hygiene, weight));
+        
+        showState(energy, fatigue, sleep, hygiene, weight);
+        System.exit(0);
     }
 
     public static int initialValue() {
@@ -83,15 +92,39 @@ public class VirtualPet {
         return result;
     }
 
-    public static int menu() {
+    public static void spaces(int num) {
+        for (int i = 0; i < num; i++) {
+            System.out.print(' ');
+        }
+    }
+    
+    public static void lines(int num) {
+        for (int i = 0; i < num; i++) {
+            System.out.print('-');
+        }
+        System.out.println();
+    }
+    
+    
+    public static char menu() {
         Scanner sc = new Scanner(System.in);
         char option;
 
+        spaces(10);
+        System.out.println("VirtualPET");
+        spaces(10);
+        System.out.println("----------");
+        spaces(10);
         System.out.println("1.- Sleep");
+        spaces(10);
         System.out.println("2.- Play");
+        spaces(10);
         System.out.println("3.- Eat");
+        spaces(10);
         System.out.println("4.- Shower");
+        spaces(10);
         System.out.println("0.- Exit application");
+        spaces(10);
         System.out.print("Option: ");
         option = sc.next().charAt(0);
 
@@ -99,12 +132,63 @@ public class VirtualPet {
     }
    
     public static void showState(int energy, int fatigue, int sleep, int hygiene, int weight) {
-        System.out.println("Sleep: " + sleep);
-        System.out.println("Fatigue: " + fatigue);
-        System.out.println("Energy: " + energy);
-        System.out.println("Hygiene: " + hygiene);
-        System.out.println("Weight: " + weight);
-   
+        String totals = "";
+     
+        totals = "| Sleep: " + sleep + " | " + "Fatigue: " + fatigue + " | " + "Energy: " + energy + " | " + "Hygiene: " + hygiene + " | " + "Weight: " + weight + " |";
+        System.out.println();
+        spaces(10);
+        lines(totals.length());
+        spaces(10);
+        System.out.println(totals);
+        spaces(10);
+        lines(totals.length());
+        System.out.println();
+        
+    }
+    
+    public static Boolean isDead(int energy, int fatigue, int sleep, int hygiene, int weight) {
+        Boolean dead = false;
+     
+        if (sleep < MINIMUM || fatigue < MINIMUM || energy < MINIMUM || hygiene < MINIMUM || weight < MINIMUM ||
+            sleep > MAXIMUN || fatigue > MAXIMUN || energy > MAXIMUN || hygiene > MAXIMUN || weight > MAXIMUN) {
+            dead = true;
+        }
+        
+        return dead;        
     }
      
+    public static void ClearConsole(){
+        try{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+              
+            if(operatingSystem.contains("Windows")){        
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            } else {
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            } 
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    
+    public static void limpiarAnt() {
+        try {
+           
+            Robot pressbot = new Robot();
+            pressbot.keyPress(KeyEvent.VK_CONTROL);
+            pressbot.keyPress(KeyEvent.VK_L);
+            pressbot.keyRelease(KeyEvent.VK_CONTROL);
+            pressbot.keyRelease(KeyEvent.VK_L);
+            TimeUnit.MILLISECONDS.sleep(20); // added another 1 second sleep
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+    }
 }
