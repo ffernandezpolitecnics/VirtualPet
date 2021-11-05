@@ -80,6 +80,12 @@ public class VirtualPet {
             }
         } while (option != '0' && !isDead(energy, fatigue, sleep, hygiene, weight));
         
+        if (option != 0) {
+            System.out.println();
+            spaces(10);
+            System.out.println("Virtual Pet is dead !!!!");
+        }
+        
         showState(energy, fatigue, sleep, hygiene, weight);
         System.exit(0);
     }
